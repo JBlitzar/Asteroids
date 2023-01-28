@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 
 export (int) var ogspeed = 200
-export (float) var rotation_speed = 0.05
+export (float) var rotation_speed = 1
 var bulletscale = 1;
 var bulletamt = 1;
 var rotation_dir = 0
@@ -15,7 +15,7 @@ export var shootingspeed = 250
 export(PackedScene) var Bullet
 var controlslocked = true
 var speed = 200;
-var angularfriction = 0.9
+var angularfriction = 0.005
 func wrap():
 	if position.x > screensize.x:
 		position.x = 0
@@ -26,7 +26,9 @@ func wrap():
 	if position.y < 0:
 		position.y = screensize.y
 
-
+func _ready():
+	get_node("/root/Main/UI/Powerups/Speed").hide()
+	get_node("/root/Main/UI/Powerups/Bullet").hide()
 func get_input():
 	rotation_dir = 0
 	if Input.is_action_pressed("ui_right"):
@@ -53,8 +55,8 @@ func add_bullet(rot_offset):
 func _physics_process(delta):
 	if not controlslocked:
 		get_input()
-	angularvelocity += rotation_dir * rotation_speed * delta * angularfriction
-	rotation += angularvelocity
+	angularvelocity += rotation_dir * rotation_speed * delta
+	rotation += (rotation_dir * rotation_speed * delta) + (angularfriction*angularvelocity)
 	velocity = move_and_slide(velocity)
 	velocity *= friction
 	wrap()
@@ -64,6 +66,10 @@ func _on_Bounding_Box_body_entered(_body):
 func turnOff():
 	self.hide()
 	$CollisionShape2D.set_deferred("disabled", true)
+	self.velocity = Vector2(0,0)
+	self.angularvelocity = 0
+	self.rotation_dir = 0
+	self.rotation = 0
 	self.position = get_viewport_rect().size/2
 func turnOn():
 	self.show()
@@ -77,8 +83,12 @@ func reset():
 	speed = ogspeed
 	bulletscale = 1
 	bulletamt = 1
+	get_node("/root/Main/UI/Powerups/Bullet").hide()
+	get_node("/root/Main/UI/Powerups/Speed").hide()
 func fast():
 	speed *= 1.7
+	get_node("/root/Main/UI/Powerups/Speed").show()
 func supershoot():
+	get_node("/root/Main/UI/Powerups/Bullet").show()
 	bulletscale = 2
 	bulletamt = 5
