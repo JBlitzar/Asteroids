@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Spaceship.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Collect.tscn" type="PackedScene" id=2]
@@ -8,6 +8,8 @@
 [ext_resource path="res://Picked Coin Echo.wav" type="AudioStream" id=6]
 [ext_resource path="res://retro_sound_1_0.wav" type="AudioStream" id=7]
 [ext_resource path="res://laserpew.ogg" type="AudioStream" id=8]
+[ext_resource path="res://lightning.png" type="Texture" id=9]
+[ext_resource path="res://bulletbig.png" type="Texture" id=10]
 
 [sub_resource type="Curve2D" id=1]
 _data = {
@@ -45,13 +47,37 @@ autostart = true
 layer = 5
 
 [node name="Score" type="Label" parent="UI"]
-visible = false
 margin_left = 8.0
 margin_top = 16.0
 margin_right = 55.0
 margin_bottom = 30.0
 rect_scale = Vector2( 5, 5 )
 text = "Score:0"
+
+[node name="Powerups" type="Control" parent="UI"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -40.0
+margin_bottom = 40.0
+
+[node name="Speed" type="Control" parent="UI/Powerups"]
+margin_left = -100.0
+margin_right = -60.0
+margin_bottom = 40.0
+
+[node name="Lightning" type="Sprite" parent="UI/Powerups/Speed"]
+position = Vector2( -6, 40 )
+scale = Vector2( 5, 5 )
+texture = ExtResource( 9 )
+
+[node name="Bullet" type="Control" parent="UI/Powerups"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Bullet" type="Sprite" parent="UI/Powerups/Bullet"]
+position = Vector2( -32, 40 )
+scale = Vector2( 5, 5 )
+texture = ExtResource( 10 )
 
 [node name="MainMenu" type="Control" parent="UI"]
 anchor_left = 0.5
