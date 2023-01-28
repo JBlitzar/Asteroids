@@ -42,7 +42,8 @@ func _on_SpawnTimer_timeout():
 	asteroid.velocity = velocity.rotated(direction)
 	var size = randi()%3+1
 	asteroid.size = size
-	$AsteroidPit.add_child(asteroid)
+	if asteroid.position.distance_to($Spaceship.position) > 300:
+		$AsteroidPit.add_child(asteroid)
 func spaceship_die():
 	score = 0
 	playingstate = false;
@@ -67,6 +68,7 @@ func asteroid_bigdie():
 	$Sounds/Asteroid_bigexplode.play()
 func _on_Button_pressed():
 	yield(get_tree(), "idle_frame")
+	$UI/Score.text = "Score: "+str(score)
 	for child in $Bulletpit.get_children():
 		child.queue_free()
 	for child in $AsteroidPit.get_children():

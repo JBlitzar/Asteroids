@@ -8,18 +8,20 @@ var Asteroid = load("res://Asteroid.tscn")
 var size = 2
 func _ready():
 	self.scale = Vector2(size,size)
-func wrap():
+func quietly_die():
+	call_deferred("queue_free")
+func check_despawn():
 	if position.x > screensize.x:
-		position.x = 0
+		quietly_die()
 	if position.y > screensize.y:
-		position.y = 0
+		quietly_die()
 	if position.x < 0:
-		position.x = screensize.x
+		quietly_die()
 	if position.y < 0:
-		position.y = screensize.y
+		quietly_die()
 func _physics_process(_delta):
 	move_and_slide(velocity)
-	wrap()
+	check_despawn()
 func spawn_mini_asteroid(new_size):
 	var asteroid = Asteroid.instance()
 	var direction = 0
