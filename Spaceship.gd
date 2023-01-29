@@ -29,6 +29,7 @@ func wrap():
 func _ready():
 	get_node("/root/Main/UI/Powerups/Speed").hide()
 	get_node("/root/Main/UI/Powerups/Bullet").hide()
+	get_node("/root/Main/UI/Powerups/Speed/Multiplier").hide()
 func get_input():
 	rotation_dir = 0
 	if Input.is_action_pressed("ui_right"):
@@ -85,8 +86,14 @@ func reset():
 	bulletamt = 1
 	get_node("/root/Main/UI/Powerups/Bullet").hide()
 	get_node("/root/Main/UI/Powerups/Speed").hide()
+	get_node("/root/Main/UI/Powerups/Speed/Multiplier").hide()
+func getSpeedLvl(): #change of base formula ftw
+	return log(speed/200)/log(1.7)
 func fast():
 	speed *= 1.7
+	if getSpeedLvl() > 1.1:
+		get_node("/root/Main/UI/Powerups/Speed/Multiplier").show()
+		get_node("/root/Main/UI/Powerups/Speed/Multiplier").text = "x"+str(getSpeedLvl())
 	get_node("/root/Main/UI/Powerups/Speed").show()
 func supershoot():
 	get_node("/root/Main/UI/Powerups/Bullet").show()

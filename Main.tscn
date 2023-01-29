@@ -52,7 +52,7 @@ margin_top = 16.0
 margin_right = 55.0
 margin_bottom = 30.0
 rect_scale = Vector2( 5, 5 )
-text = "Score:0"
+text = "Score: 0"
 
 [node name="Powerups" type="Control" parent="UI"]
 anchor_left = 1.0
@@ -61,14 +61,22 @@ margin_left = -40.0
 margin_bottom = 40.0
 
 [node name="Speed" type="Control" parent="UI/Powerups"]
-margin_left = -100.0
-margin_right = -60.0
+margin_left = -250.0
+margin_right = -210.0
 margin_bottom = 40.0
 
 [node name="Lightning" type="Sprite" parent="UI/Powerups/Speed"]
 position = Vector2( -6, 40 )
 scale = Vector2( 5, 5 )
 texture = ExtResource( 9 )
+
+[node name="Multiplier" type="Label" parent="UI/Powerups/Speed"]
+margin_left = 40.0
+margin_top = 10.0
+margin_right = 80.0
+margin_bottom = 24.0
+rect_scale = Vector2( 5, 5 )
+text = "x2"
 
 [node name="Bullet" type="Control" parent="UI/Powerups"]
 margin_right = 40.0

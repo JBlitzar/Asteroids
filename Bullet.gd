@@ -13,15 +13,17 @@ func _ready():
 func die():
 	call_deferred("queue_free")
 
-func wrap():
+func quietly_die():
+	call_deferred("queue_free")
+func check_despawn():
 	if position.x > screensize.x:
-		position.x = 10
+		quietly_die()
 	if position.y > screensize.y:
-		position.y = 10
+		quietly_die()
 	if position.x < 0:
-		position.x = screensize.x-10
+		quietly_die()
 	if position.y < 0:
-		position.y = screensize.y-10
+		quietly_die()
 func _physics_process(_delta):
 	velocity = move_and_slide(velocity)
-	wrap()
+	check_despawn()
